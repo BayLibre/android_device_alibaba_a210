@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A210 Primary Audio HAL Module Configuration.
+
+     No real ALSA hardware behind this yet (a210-evb's dts wires no audio
+     codec) - this declares the same generic Speaker/Mic ports as AOSP's
+     own frameworks/av/services/audiopolicy/config/primary_audio_policy_configuration.xml
+     template. ModulePrimary only opens the configured ALSA card
+     (persist.vendor.audio.primary.card, default 0) lazily when a stream is
+     actually opened, so this registers IModule/default cleanly at boot
+     with no card present - playback/capture will just fail at open time
+     until a real codec is added. -->
+<module name="primary" halVersion="3.0">
+    <attachedDevices>
+        <item>Speaker</item>
+        <item>Built-In Mic</item>
+    </attachedDevices>
+    <defaultOutputDevice>Speaker</defaultOutputDevice>
+
+    <mixPorts>
+        <mixPort name="primary output" role="source" flags="AUDIO_OUTPUT_FLAG_PRIMARY">
+            <profile name="" format="AUDIO_FORMAT_PCM_16_BIT"
+                     samplingRates="48000"
+                     channelMasks="AUDIO_CHANNEL_OUT_STEREO"/>
+        </mixPort>
+
+        <mixPort name="primary input" role="sink">
+            <profile name="" format="AUDIO_FORMAT_PCM_16_BIT"
+                     samplingRates="48000"
+                     channelMasks="AUDIO_CHANNEL_IN_STEREO"/>
+        </mixPort>
+    </mixPorts>
+
+    <devicePorts>
+        <devicePort tagName="Speaker" role="sink" type="AUDIO_DEVICE_OUT_SPEAKER" address="">
+            <profile name="" format="AUDIO_FORMAT_PCM_16_BIT"
+                     samplingRates="48000"
+                     channelMasks="AUDIO_CHANNEL_OUT_STEREO"/>
+        </devicePort>
+
+        <devicePort tagName="Built-In Mic" type="AUDIO_DEVICE_IN_BUILTIN_MIC" role="source" address="bottom">
+            <profile name="" format="AUDIO_FORMAT_PCM_16_BIT"
+                     samplingRates="48000"
+                     channelMasks="AUDIO_CHANNEL_IN_STEREO"/>
+        </devicePort>
+    </devicePorts>
+
+    <routes>
+        <route type="mix" sink="Speaker"
+               sources="primary output"/>
+        <route type="mix" sink="primary input"
+               sources="Built-In Mic"/>
+    </routes>
+</module>

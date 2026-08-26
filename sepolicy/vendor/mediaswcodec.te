@@ -1,0 +1,20 @@
+# mediaswcodec needs GPU access to answer AHardwareBuffer_isSupported queries
+# during Codec2 software component initialization (C2SoftApvDec).
+# The call chain is: listComponents -> C2SoftApvDec -> AHardwareBuffer_isSupported
+# -> Gralloc5Mapper -> libgbm_mesa.so -> zink_internal_create_screen.
+
+gpu_access(mediaswcodec)
+allow mediaswcodec gpu_device:chr_file { open read write ioctl map };
+allow mediaswcodec hal_graphics_mapper_service:service_manager find;
+
+# Mesa/Zink GPU libraries loaded in-process via gralloc (libgallium_dri.so, etc.).
+# Files must be labeled same_process_hal_file (see file_contexts fix for
+# /vendor/lib64/libgallium_dri.so).
+# Coredomains cannot execute vendor_file but CAN execute same_process_hal_file
+# (explicitly excluded from the vendor_file_type execute neverallow in domain.te).
+allow mediaswcodec same_process_hal_file:file { read open getattr map execute };
+
+# Vendor GPU properties (ro.hardware.egl, vendor.mesa.*, ro.hardware.vulkan, etc.)
+get_prop(mediaswcodec, vendor_graphics_prop)
+
+# Suppress denials for properties not needed by mediaswcodec

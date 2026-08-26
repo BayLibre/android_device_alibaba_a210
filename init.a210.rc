@@ -1,0 +1,21 @@
+on early-init
+    mount debugfs debugfs /sys/kernel/debug mode=0755
+
+on init
+    symlink /sdcard /storage/sdcard0
+
+on fs
+    mount_all /vendor/etc/fstab.a210 --early
+
+on late-fs
+    mount_all /vendor/etc/fstab.a210 --late
+
+    # zram dont's auto-loads either
+    insmod /system_dlkm/lib/modules/zsmalloc.ko
+    insmod /system_dlkm/lib/modules/zram.ko
+    swapon_all /vendor/etc/fstab.a210
+
+# Testing-only: hold a permanent wake lock so the board doesn't suspend
+# (no input path to wake it). Drop once input exists.
+on boot
+    write /sys/power/wake_lock a210-testing-stay-awake

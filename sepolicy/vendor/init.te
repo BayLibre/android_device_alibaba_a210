@@ -1,0 +1,29 @@
+#
+# Copyright (C) 2024 The Android Open Source Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Allow init to relabel block device symlinks
+allow init boot_block_device:lnk_file relabelto;
+allow init persist_block_device:lnk_file relabelto;
+allow init vbmeta_block_device:lnk_file relabelto;
+
+# Allow init to write to misc partition (BCB)
+allow init misc_block_device:blk_file { write };
+
+# Allow init to mount on functionfs dir (USB gadget)
+allow init functionfs:dir { mounton };
+
+# Allow init to mount on vendor data dir
+allow init mnt_vendor_file:dir mounton;
+
+# USB configfs setup
+allow init configfs:dir create_dir_perms;
+allow init configfs:file write;
+allow init configfs:lnk_file { create unlink };
+
+# Symlink /sdcard
+allow init tmpfs:lnk_file create;
+
+dontaudit init kernel:system module_request;

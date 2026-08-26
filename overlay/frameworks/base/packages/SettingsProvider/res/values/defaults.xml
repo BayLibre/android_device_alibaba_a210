@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- def_screen_off_timeout=-1 keeps the screen from ever sleeping, so the
+     SoC never idles into s2idle suspend (matches spacemit's k1/k3) - A210
+     has no functional touch input yet either, so without this the board
+     goes to sleep on its own shortly after boot with nothing able to wake
+     it back up, taking the adb/USB link down with it. Testing-only: drop
+     once there's a real display + input path and normal screen timeout
+     behavior is wanted. -->
+<resources>
+    <integer name="def_screen_off_timeout">-1</integer>
+    <bool name="def_lockscreen_disabled">true</bool>
+    <bool name="def_stay_on_while_plugged_in">true</bool>
+</resources>
