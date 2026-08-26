@@ -139,6 +139,46 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_COPY_FILES += \
     device/linaro/hikey/etc/permissions/android.hardware.screen.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.screen.xml
 
+# ============================================================
+# GPU: none yet (PowerVR IMG Rogue - clk_gpu/power_gpu are still
+# disabled kernel-side). Until that lands, give SurfaceFlinger's
+# RenderEngine a real GLES/Vulkan backend via swangle - ANGLE
+# (GLES-over-Vulkan) fronting SwiftShader's software Vulkan ICD
+# Swap ro.hardware.egl/vulkan + the gralloc backend to
+# mesa once real GPU support lands
+# ============================================================
+PRODUCT_REQUIRES_INSECURE_EXECMEM_FOR_SWIFTSHADER := true
+
+PRODUCT_PACKAGES += \
+    libEGL_angle \
+    libGLESv1_CM_angle \
+    libGLESv2_angle \
+    vulkan.pastel
+
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.hardware.egl=angle \
+    ro.hardware.vulkan=pastel \
+    debug.hwui.renderer=skiagl
+
+# Disable boot-time shader cache priming: re-enable once a real GPU lands.
+PRODUCT_VENDOR_PROPERTIES += \
+    service.sf.prime_shader_cache=0
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.opengles.version=196608 \
+    persist.demo.rotationlock=1
+
+TARGET_VULKAN_SUPPORT := true
+TARGET_USES_VULKAN := true
+
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.opengles.aep.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.opengles.aep.xml \
+    frameworks/native/data/etc/android.software.opengles.deqp.level-2022-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.opengles.deqp.level.xml \
+    frameworks/native/data/etc/android.hardware.vulkan.compute-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.compute.xml \
+    frameworks/native/data/etc/android.hardware.vulkan.level-1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.level.xml \
+    frameworks/native/data/etc/android.hardware.vulkan.version-1_1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.version.xml \
+    frameworks/native/data/etc/android.software.vulkan.deqp.level-2021-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.vulkan.deqp.level.xml
+
 # Fstab
 PRODUCT_PACKAGES += \
     fstab.a210 \
