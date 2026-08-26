@@ -1,0 +1,17 @@
+hal_client_domain(hal_graphics_composer_default, hal_graphics_allocator);
+vndbinder_use(hal_graphics_composer_default)
+
+gpu_access(hal_graphics_composer_server);
+get_prop(hal_graphics_composer_default, vendor_graphics_prop)
+
+# gpu_access() above only covers gpu_device:dir search + sysfs_gpu - it
+# grants no chr_file access at all, so without this the composer can see
+# /dev/dri but can't actually open()/ioctl() the card node it needs for
+# atomic modesetting + drmSetMaster() (same access surfaceflinger.te and
+# mediaswcodec.te already grant themselves explicitly, in their own
+# domains).
+allow hal_graphics_composer_default gpu_device:dir { open read search };
+allow hal_graphics_composer_default gpu_device:chr_file { open read write ioctl map };
+
+allow hal_graphics_composer_default self:netlink_kobject_uevent_socket { bind create read };
+allow hal_graphics_composer_default hal_graphics_mapper_service:service_manager find;

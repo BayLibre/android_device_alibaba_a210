@@ -1,0 +1,14 @@
+#
+# Copyright (C) 2024 The Android Open Source Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Allow fastbootd to access block devices for flashing
+allow fastbootd {
+	userdata_block_device
+	misc_block_device
+	super_block_device
+	vbmeta_block_device
+	boot_block_device
+}:blk_file { getattr open read write ioctl };
