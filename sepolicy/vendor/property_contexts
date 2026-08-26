@@ -1,0 +1,17 @@
+#
+# Copyright (C) 2024 The Android Open Source Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# SpacemiT specific properties
+ro.hardware.spacemit       u:object_r:vendor_default_prop:s0
+vendor.spacemit.           u:object_r:vendor_default_prop:s0
+
+# Graphics properties. ro.hardware.{egl,vulkan,gralloc,hwcomposer} are left to
+# AOSP's exported_default_prop, which every domain can read; relabelling them
+# here made them unreadable without an explicit get_prop().
+vendor.gralloc.                u:object_r:vendor_graphics_prop:s0
+vendor.mesa.                   u:object_r:vendor_graphics_prop:s0
+vendor.hwc.drm.device                  u:object_r:vendor_graphics_prop:s0 exact string
+vendor.hwc.drm.internal_display_names  u:object_r:vendor_graphics_prop:s0 exact string

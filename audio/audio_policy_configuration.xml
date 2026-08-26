@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Zhihe A210 Audio Policy Configuration.
+
+     A210 has no audio codec wired up yet (no ALSA card, no BT radio
+     enabled) - this only exists to satisfy the com.android.hardware.audio.generic
+     APEX's VINTF manifest (android.hardware.audio.service-aidl.generic.xml,
+     shared with spacemit's k1/k3), which mandates IModule/default,
+     IModule/bluetooth and IModule/r_submix all be registered. Without this
+     file none of them are, and AudioFlinger's onFirstRef() null-derefs
+     trying to reach IModule/default - see the primary module note below.
+     Real device/mixPort/route entries can be added once A210 gets an
+     actual audio codec. -->
+<audioPolicyConfiguration version="7.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <globalConfiguration speaker_drc_enabled="false"/>
+
+    <modules>
+        <!-- Primary Audio HAL (AIDL) - no real hardware, see
+             primary_audio_policy_configuration.xml -->
+        <xi:include href="primary_audio_policy_configuration.xml"/>
+
+        <!-- Bluetooth Audio HAL (AIDL) - mandatory per the shared generic
+             VINTF manifest; idle until A210 has a BT radio. -->
+        <xi:include href="bluetooth_audio_policy_configuration_7_0.xml"/>
+
+        <!-- Remote Submix -->
+        <xi:include href="r_submix_audio_policy_configuration.xml"/>
+    </modules>
+
+    <!-- Volume section -->
+    <xi:include href="audio_policy_volumes.xml"/>
+    <xi:include href="default_volume_tables.xml"/>
+</audioPolicyConfiguration>

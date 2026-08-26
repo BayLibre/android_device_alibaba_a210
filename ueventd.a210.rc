@@ -1,0 +1,6 @@
+modalias_handling enabled
+
+/dev/ttyS*                0660   root       system
+
+# Storage: for factory reset protection feature
+/dev/block/by-name/frp   0660   system     system

@@ -1,0 +1,20 @@
+// Copyright (C) 2026 The Android Open Source Project
+// SPDX-License-Identifier: Apache-2.0
+
+package {
+    default_applicable_licenses: ["Android-Apache-2.0"],
+}
+
+genrule {
+    name: "gen_fstab_a210",
+    srcs: ["fstab.in"],
+    out: ["fstab.a210"],
+    cmd: "cp $(in) $(out)",
+}
+
+prebuilt_etc {
+    name: "fstab.a210",
+    src: ":gen_fstab_a210",
+    vendor: true,
+    vendor_ramdisk_available: true,
+}

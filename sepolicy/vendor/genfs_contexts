@@ -1,0 +1,6 @@
+# sysfs: eMMC host controller (direct child of /soc)
+genfscon sysfs /devices/platform/soc/500000.sdhci                          u:object_r:sysfs_mmc:s0
+
+# proc
+# zram0 is configured as swap in fstab.in
+genfscon proc /sys/vm/swappiness                                            u:object_r:proc_dirty:s0

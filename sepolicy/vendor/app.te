@@ -1,0 +1,4 @@
+# isolated_app_all is excluded: AOSP forbids it any sysfs_type access outside a
+# fixed whitelist (isolated_app_all.te), and isolated processes do no rendering.
+gpu_access({ appdomain -isolated_app_all })
+get_prop({ appdomain -isolated_app_all }, vendor_graphics_prop)
