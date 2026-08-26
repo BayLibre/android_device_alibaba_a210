@@ -4,6 +4,9 @@ on early-init
 on init
     symlink /sdcard /storage/sdcard0
 
+    # vkms don't auto-loads (virtual driver, no uevent); insmod explicitly
+    insmod /system_dlkm/lib/modules/vkms.ko
+
 on fs
     mount_all /vendor/etc/fstab.a210 --early
 
