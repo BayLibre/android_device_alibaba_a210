@@ -62,7 +62,15 @@ BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := \
 
 # Vendor DLKM: loaded after rootfs mount (no load-order dependency here).
 BOARD_VENDOR_KERNEL_MODULES := $(wildcard $(KERNEL_MODULES_PATH)/vendor_dlkm/*.ko)
-BOARD_VENDOR_KERNEL_MODULES_LOAD := $(BOARD_VENDOR_KERNEL_MODULES)
+BOARD_VENDOR_KERNEL_MODULES_LOAD := \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/phy-zhihe-snps-c10phy.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/phy-zhihe-snps-usb2.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/dwc3-zhihe.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/drm_display_helper.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/drm_dma_helper.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/dw-hdmi.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/th1520-dw-hdmi.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/verisilicon-dc.ko
 
 BOARD_SYSTEM_KERNEL_MODULES := $(wildcard $(KERNEL_MODULES_PATH)/system_dlkm/*.ko)
 BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(BOARD_SYSTEM_KERNEL_MODULES)
