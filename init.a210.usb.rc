@@ -24,13 +24,7 @@ on boot
     mount functionfs ptp /dev/usb-ffs/ptp rmode=0770,fmode=0660,uid=1024,gid=1024,no_disconnect=1
     setprop sys.usb.ffs.aio_compat 1
 
-    # Set USB controller — dwc3 (USB3.1 gadget/peripheral, forced
-    # dr_mode="peripheral" for ADB in a210-evb.dts). Address derived from
-    # the DTS: usb3: dwc3@8100000 under usb31: usb3@8001000, both soc and
-    # usb31 use identity "ranges;" so 0x08100000 is already the absolute
-    # physical address -> Linux device name "8100000.dwc3".
-    # NEEDS-BOARD-CONFIRMATION: verify against /sys/class/udc/ once the
-    # board boots - correct this if the driver registers a different name.
+    # Set USB controller — dwc3 (USB3.1 gadget/peripheral
     setprop sys.usb.controller "8100000.dwc3"
     setprop vendor.usb.controller "8100000.dwc3"
 

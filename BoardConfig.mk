@@ -63,9 +63,13 @@ BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := \
 # Vendor DLKM: loaded after rootfs mount (no load-order dependency here).
 BOARD_VENDOR_KERNEL_MODULES := $(wildcard $(KERNEL_MODULES_PATH)/vendor_dlkm/*.ko)
 BOARD_VENDOR_KERNEL_MODULES_LOAD := \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/i2c-designware-core.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/i2c-designware-platform.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/gpio-pca953x.ko \
     $(KERNEL_MODULES_PATH)/vendor_dlkm/phy-zhihe-snps-c10phy.ko \
     $(KERNEL_MODULES_PATH)/vendor_dlkm/phy-zhihe-snps-usb2.ko \
     $(KERNEL_MODULES_PATH)/vendor_dlkm/dwc3-zhihe.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/dwc2.ko \
     $(KERNEL_MODULES_PATH)/vendor_dlkm/drm_display_helper.ko \
     $(KERNEL_MODULES_PATH)/vendor_dlkm/drm_dma_helper.ko \
     $(KERNEL_MODULES_PATH)/vendor_dlkm/dw-hdmi.ko \

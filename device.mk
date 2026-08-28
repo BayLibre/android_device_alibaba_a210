@@ -59,13 +59,14 @@ PRODUCT_PACKAGES += \
     android.hardware.health-service.example \
     android.hardware.health-service.example_recovery
 
-# USB HAL (BayLibre generic). The only enabled USB path today is the
-# USB3.1 controller in peripheral/gadget mode for ADB (a210-evb.dts forces
-# &usb3 dr_mode = "peripheral"; usb2_0 is disabled and nothing enables
-# host or accessory mode) - no android.hardware.usb.host.xml /
-# .accessory.xml below, those would misreport capabilities we don't have.
+# USB HAL (BayLibre generic).
+# &usb3 stays peripheral/gadget-only (ADB);
+# usb2_0 in host mode
 PRODUCT_PACKAGES += \
     com.android.hardware.usb.generic
+
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.usb.host.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.host.xml
 
 # sys.usb.configfs=1: modern configfs gadget (mainline kernel has no legacy android_usb).
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -193,10 +194,8 @@ PRODUCT_COPY_FILES += \
 # Permissions - generic OS software features unrelated to any specific
 # hardware (verified_boot / secure_lock_screen match the AVB + nonsecure
 # gatekeeper already enabled above; the rest are hardware-independent
-# framework features). Deliberately no wifi/bluetooth/ethernet/usb.host/
-# usb.accessory permission XMLs - none of that hardware is enabled or has
-# a driver on this board today. (android.hardware.screen.xml moved to the
-# Display block above, now that a display composer is wired up.)
+# framework features). Deliberately no wifi/bluetooth/ethernet permission
+# XMLs - none of that hardware is enabled or has a driver on this board today.
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.ipsec_tunnels.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.ipsec_tunnels.xml \
     frameworks/native/data/etc/android.software.verified_boot.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.verified_boot.xml \
