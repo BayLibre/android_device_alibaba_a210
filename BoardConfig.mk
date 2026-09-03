@@ -43,7 +43,6 @@ ifneq ($(TARGET_BUILD_VARIANT),user)
 BOARD_KERNEL_CMDLINE += earlycon
 BOARD_KERNEL_CMDLINE += console=ttyS4,115200
 endif
-BOARD_KERNEL_CMDLINE += clk_ignore_unused pd_ignore_unused
 
 # Kernel modules staged by zhihe_a210_dist; re-run its bazel dist to refresh.
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(wildcard $(KERNEL_MODULES_PATH)/ramdisk/*.ko)
