@@ -1,5 +1,3 @@
-# SwiftShader (swangle) JITs shaders, needs W+X memory; drop once real GPU/Mesa lands.
-allow surfaceflinger self:process execmem;
 gpu_access(surfaceflinger)
 get_prop(surfaceflinger, vendor_graphics_prop)
 

@@ -1,6 +1,11 @@
 # sysfs: eMMC host controller (direct child of /soc)
 genfscon sysfs /devices/platform/soc/500000.sdhci                          u:object_r:sysfs_mmc:s0
 
+# GPU (PowerVR BXM-4-64: gpu@6c00000 in a210.dtsi, direct child of /soc)
+genfscon sysfs /devices/platform/soc/6c00000.gpu                           u:object_r:sysfs_gpu:s0
+# DRM virtual devices — needed by SurfaceFlinger / hwc-drm for connector hotplug
+genfscon sysfs /devices/virtual/drm                                        u:object_r:sysfs_gpu:s0
+
 # proc
 # zram0 is configured as swap in fstab.in
 genfscon proc /sys/vm/swappiness                                            u:object_r:proc_dirty:s0

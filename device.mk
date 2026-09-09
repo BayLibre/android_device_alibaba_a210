@@ -112,12 +112,8 @@ PRODUCT_PACKAGES += \
 
 # ============================================================
 # Display: android.hardware.composer.hwc3-service.drm (generic
-# atomic-KMS composer + minigbm allocator/mapper.
-# Currently, there's no GPU, so gralloc allocates via
-# minigbm's plain DRM dumb-buffer path (external/minigbm's
-# backend_verisilicon, matched by DRM driver name in drv_get_backend() -
-# no vendor.gralloc.minigbm.backend override needed/wanted, unlike k3's
-# Mesa gbm_mesa override).
+# atomic-KMS composer) + minigbm allocator/mapper, backed by Mesa's
+# gbm_mesa backend (see the GPU block below).
 # ============================================================
 
 # modetest: DRM/KMS test tool, bypasses SurfaceFlinger/gralloc/GPU for display bring-up.
@@ -146,29 +142,44 @@ PRODUCT_COPY_FILES += \
     device/alibaba/a210/firmware/a210-aon.bin:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/lib/firmware/a210-aon.bin
 
 # ============================================================
-# GPU: none yet (PowerVR IMG Rogue - clk_gpu/power_gpu are still
-# disabled kernel-side). Until that lands, give SurfaceFlinger's
-# RenderEngine a real GLES/Vulkan backend via swangle - ANGLE
-# (GLES-over-Vulkan) fronting SwiftShader's software Vulkan ICD
-# Swap ro.hardware.egl/vulkan + the gralloc backend to
-# mesa once real GPU support lands
+# GPU: Imagination PowerVR BXM-4-64 (IMG Rogue), via the upstream
+# drivers/gpu/drm/imagination "powervr" driver (gpu@6c00000 in
+# a210.dtsi). Userspace is Mesa3D: the PowerVR Vulkan driver, Zink
+# for OpenGL ES on top of it, and gralloc via Mesa's gbm backend.
 # ============================================================
-PRODUCT_REQUIRES_INSECURE_EXECMEM_FOR_SWIFTSHADER := true
+
+# GPU firmware: same rogue_36.52.104.182_v1.fw as T-Head TH1520 (same
+# GPU core/revision).
+PRODUCT_COPY_FILES += \
+    device/alibaba/a210/firmware/powervr/rogue_36.52.104.182_v1.fw:$(TARGET_COPY_OUT_VENDOR)/firmware/powervr/rogue_36.52.104.182_v1.fw
+
+PRODUCT_SOONG_NAMESPACES += \
+    device/alibaba/a210/mesa \
+    external/minigbm/gbm_mesa_driver
 
 PRODUCT_PACKAGES += \
-    libEGL_angle \
-    libGLESv1_CM_angle \
-    libGLESv2_angle \
-    vulkan.pastel
+    libGLES_mesa \
+    libGLESv1_CM_mesa \
+    libGLESv2_mesa \
+    libgallium_dri \
+    vulkan.mesa \
+    libgbm_mesa \
+    dri_gbm \
+    vulkan_mesa_icd \
+    libgbm_mesa_wrapper \
+    zink_dri \
+    powervr_dri \
+    verisilicon_dri \
+    kmsro_dri
 
 PRODUCT_VENDOR_PROPERTIES += \
-    ro.hardware.egl=angle \
-    ro.hardware.vulkan=pastel \
-    debug.hwui.renderer=skiagl
-
-# Disable boot-time shader cache priming: re-enable once a real GPU lands.
-PRODUCT_VENDOR_PROPERTIES += \
-    service.sf.prime_shader_cache=0
+    ro.hardware.egl=mesa \
+    ro.hardware.vulkan=mesa \
+    debug.hwui.renderer=skiavk \
+    debug.renderengine.backend=skiavkthreaded \
+    vendor.gralloc.minigbm.backend=gbm_mesa \
+    vendor.mesa.gbm_backends_path=/vendor/lib64/gbm \
+    vendor.mesa.pvr.i.want.a.broken.vulkan.driver=1
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=196608 \
@@ -184,6 +195,12 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.vulkan.level-1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.level.xml \
     frameworks/native/data/etc/android.hardware.vulkan.version-1_1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.version.xml \
     frameworks/native/data/etc/android.software.vulkan.deqp.level-2021-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.vulkan.deqp.level.xml
+
+# Vendor seccomp policy extension for media.swcodec: gralloc's gbm_mesa
+# backend pulls in Mesa/Zink GPU init even for plain pixel-format queries,
+# which mediaswcodec's default sandbox doesn't allow without this.
+PRODUCT_COPY_FILES += \
+    device/alibaba/a210/seccomp_policy/mediaswcodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaswcodec.policy
 
 # Fstab
 PRODUCT_PACKAGES += \

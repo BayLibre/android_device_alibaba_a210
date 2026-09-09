@@ -76,14 +76,7 @@
 /vendor/lib(64)?/gbm/dri_gbm\.so                                               u:object_r:same_process_hal_file:s0
 /vendor/lib(64)?/dri/zink_dri\.so                                              u:object_r:same_process_hal_file:s0
 /vendor/lib(64)?/dri/powervr_dri\.so                                           u:object_r:same_process_hal_file:s0
-/vendor/lib(64)?/dri/spacemit_dri\.so                                          u:object_r:same_process_hal_file:s0
-
-# ANGLE + SwiftShader (swangle): software GLES/Vulkan until real GPU lands.
-/vendor/lib(64)?/hw/vulkan\.pastel\.so                                         u:object_r:same_process_hal_file:s0
-/vendor/lib(64)?/libEGL_angle\.so                                              u:object_r:same_process_hal_file:s0
-/vendor/lib(64)?/libGLESv1_CM_angle\.so                                        u:object_r:same_process_hal_file:s0
-/vendor/lib(64)?/libGLESv2_angle\.so                                           u:object_r:same_process_hal_file:s0
-/vendor/lib(64)?/libfeature_support_angle\.so                                  u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/dri/kmsro_dri\.so                                             u:object_r:same_process_hal_file:s0
 
 # SPHAL deps pulled in by minigbm gralloc / Mesa.
 /vendor/lib(64)?/libui\.so                                                     u:object_r:same_process_hal_file:s0
