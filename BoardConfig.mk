@@ -99,7 +99,9 @@ BOARD_MKBOOTIMG_ARGS := --header_version $(BOARD_BOOT_HEADER_VERSION) --pagesize
 BOARD_MKBOOTIMG_INIT_ARGS := --header_version $(BOARD_INIT_BOOT_HEADER_VERSION)
 
 # Bootconfig
-BOARD_BOOTCONFIG += androidboot.load_modules_parallel=true
+# Serialized (was true): parallel vendor_dlkm insmod intermittently
+# freezes boot now that AON regulators + GPU/DRM modules race for it.
+BOARD_BOOTCONFIG += androidboot.load_modules_parallel=false
 BOARD_BOOTCONFIG += androidboot.logcat.buffersize=4M
 BOARD_BOOTCONFIG += androidboot.hardware=a210
 BOARD_BOOTCONFIG += androidboot.boot_devices=soc/500000.sdhci
