@@ -5,14 +5,11 @@
 #
 
 # Architecture
-# XuanTie C908 which has NO dedicated riscv64 arch variant in build/soong/cc/config
-# The AOSP riscv64 baseline (-march=rv64gcv_zba_zbb_zbs) is already a strict subset
-# of what the C908 advertises (the only extra extension the C908 has is
-# zbc), and nothing in this tree is gated on zbc today, so adding a variant right now
-# would be a no-op. Leave this empty (baseline) until there's a concrete
-# zbc-gated fast path or an upstream C908 tuning model to hang a variant on.
+# Heterogeneous C908 (little) + C920 (big) cluster pair; neither implements
+# Zvbb, so use the "a210" variant (build/soong/{cc,rust}/config/riscv64_device.go)
+# instead of the riscv64 baseline.
 TARGET_ARCH := riscv64
-TARGET_ARCH_VARIANT :=
+TARGET_ARCH_VARIANT := a210
 TARGET_CPU_ABI := riscv64
 TARGET_CPU_VARIANT := generic
 
