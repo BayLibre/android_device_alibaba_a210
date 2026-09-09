@@ -57,7 +57,8 @@ fastboot ${device} flash vbmeta_system_dlkm_b vbmeta_system_dlkm.img || { echo $
 echo "###### Flash super"
 fastboot ${device} flash super super.img || { echo $FAIL; exit 1; }
 
-echo "###### Erase misc, select slot a"
+echo "###### Erase userdata, misc, select slot a"
+fastboot ${device} erase userdata || { echo $FAIL; exit 1; }
 fastboot ${device} erase misc || { echo $FAIL; exit 1; }
 fastboot ${device} set_active a
 
