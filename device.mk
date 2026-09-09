@@ -141,6 +141,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_COPY_FILES += \
     device/linaro/hikey/etc/permissions/android.hardware.screen.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.screen.xml
 
+# AON co-processor firmware must be shipped in the vendor ramdisk
+PRODUCT_COPY_FILES += \
+    device/alibaba/a210/firmware/a210-aon.bin:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/lib/firmware/a210-aon.bin
+
 # ============================================================
 # GPU: none yet (PowerVR IMG Rogue - clk_gpu/power_gpu are still
 # disabled kernel-side). Until that lands, give SurfaceFlinger's
