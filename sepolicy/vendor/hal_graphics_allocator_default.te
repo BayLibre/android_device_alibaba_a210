@@ -1,8 +1,9 @@
 gpu_access(hal_graphics_allocator_default);
 
-# Unlike k3 (Mesa/gbm_mesa), A210 has no GPU backend yet; minigbm probes /dev/dri directly.
-allow hal_graphics_allocator_default gpu_device:dir { open read search };
-allow hal_graphics_allocator_default gpu_device:chr_file { open read write ioctl map };
+# Like k1/k3 (Mesa/gbm_mesa): minigbm delegates buffer allocation to
+# Mesa's dri_gbm.so instead of probing /dev/dri itself, so no direct
+# gpu_device chr_file access is needed here.
+allow hal_graphics_allocator_default gpu_device:dir getattr;
 allow hal_graphics_allocator_default graphics_device:dir search;
 allow hal_graphics_allocator_default graphics_device:chr_file { open read write ioctl map rw_file_perms};
 allow hal_graphics_allocator_default dmabuf_system_heap_device:chr_file r_file_perms;

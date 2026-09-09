@@ -1,0 +1,14 @@
+# Vendor seccomp policy extension for media.swcodec: needed by Mesa/Zink
+# GPU init triggered via AHardwareBuffer_isSupported during Codec2 listing.
+epoll_create1: 1
+epoll_ctl: 1
+epoll_pwait: 1
+eventfd2: 1
+getcwd: 1
+listen: 1
+pselect6: 1
+sched_getaffinity: 1
+setsockopt: 1
+sysinfo: 1
+# Mesa's u_cpu_detect.c queries RISC-V HW features via riscv_hwprobe().
+riscv_hwprobe: 1
