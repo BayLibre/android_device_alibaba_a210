@@ -73,6 +73,11 @@ BOARD_VENDOR_KERNEL_MODULES_LOAD := \
     $(KERNEL_MODULES_PATH)/vendor_dlkm/i2c-designware-core.ko \
     $(KERNEL_MODULES_PATH)/vendor_dlkm/i2c-designware-platform.ko \
     $(KERNEL_MODULES_PATH)/vendor_dlkm/gpio-pca953x.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/pwrseq_simple.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/rtw88_core.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/rtw88_sdio.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/rtw88_8822c.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/rtw88_8822cs.ko \
     $(KERNEL_MODULES_PATH)/vendor_dlkm/phy-zhihe-snps-c10phy.ko \
     $(KERNEL_MODULES_PATH)/vendor_dlkm/phy-zhihe-snps-usb2.ko \
     $(KERNEL_MODULES_PATH)/vendor_dlkm/dwc3-zhihe.ko \
@@ -183,6 +188,12 @@ BOARD_AVB_VBMETA_SYSTEM_DLKM_KEY_PATH := external/avb/test/data/testkey_rsa4096.
 BOARD_AVB_VBMETA_SYSTEM_DLKM_ALGORITHM := SHA256_RSA4096
 BOARD_AVB_VBMETA_SYSTEM_DLKM_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
 BOARD_AVB_VBMETA_SYSTEM_DLKM_ROLLBACK_INDEX_LOCATION := 5
+
+# WiFi
+WIFI_HIDL_UNIFIED_SUPPLICANT_SERVICE_RC_ENTRY := true
+WPA_SUPPLICANT_VERSION := VER_0_8_X
+BOARD_WPA_SUPPLICANT_DRIVER := NL80211
+BOARD_HOSTAPD_DRIVER := NL80211
 
 # SELinux
 BOARD_SEPOLICY_DIRS += hardware/generic/usb/aidl/sepolicy

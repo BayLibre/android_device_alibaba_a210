@@ -48,6 +48,9 @@
 # RTC
 /dev/rtc[0-9]+                    u:object_r:rtc_device:s0
 
+# Wifi/Bluetooth
+/dev/rfkill                       u:object_r:rfkill_device:s0
+
 # Swap device
 /dev/block/zram0                  u:object_r:swap_block_device:s0
 

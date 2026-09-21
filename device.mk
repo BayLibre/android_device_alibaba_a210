@@ -202,6 +202,28 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/alibaba/a210/seccomp_policy/mediaswcodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaswcodec.policy
 
+# WiFi
+PRODUCT_PACKAGES += \
+    linux_firmware_rtw88-rtw8822c
+
+PRODUCT_PACKAGES += \
+    wpa_supplicant \
+    wpa_cli \
+    wificond
+
+PRODUCT_VENDOR_PROPERTIES += \
+    wifi.interface=wlan0
+
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml \
+    frameworks/native/data/etc/android.hardware.wifi.direct.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.direct.xml
+
+# Wifi P2P/Supplicant configs
+PRODUCT_COPY_FILES += \
+    device/alibaba/a210/wifi/wpa_supplicant.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant.conf \
+    device/alibaba/a210/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
+    device/alibaba/a210/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf
+
 # Fstab
 PRODUCT_PACKAGES += \
     fstab.a210 \
