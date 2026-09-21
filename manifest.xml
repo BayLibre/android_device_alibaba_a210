@@ -5,10 +5,7 @@
      Deliberately empty for this phase: boot/health/fastboot/power/
      keymint/gatekeeper each ship their own VINTF fragment alongside
      their init.rc (via their Android.bp vintf_fragments), so this
-     device-level manifest doesn't need to redeclare them. There is no
-     device-specific HAL requiring manual declaration yet (no camera,
-     no wifi/bluetooth, no display/GPU) - add one here the way K1 does
-     for its external USB camera HAL once A210 has an equivalent.
+     device-level manifest doesn't need to redeclare them.
 -->
 <manifest version="1.0" type="device" target-level="202404">
 </manifest>
