@@ -224,6 +224,41 @@ PRODUCT_COPY_FILES += \
     device/alibaba/a210/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
     device/alibaba/a210/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf
 
+# Bluetooth
+PRODUCT_PACKAGES += \
+    rtl8822cs_bt_firmware
+
+PRODUCT_PACKAGES += \
+    android.hardware.bluetooth-service.default
+
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.bluetooth.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.bluetooth.xml \
+    frameworks/native/data/etc/android.hardware.bluetooth_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.bluetooth_le.xml
+
+# Bluetooth profiles
+PRODUCT_PRODUCT_PROPERTIES += \
+    bluetooth.profile.gatt.enabled?=true \
+    bluetooth.profile.a2dp.source.enabled?=true \
+    bluetooth.profile.avrcp.target.enabled?=true \
+    bluetooth.profile.hfp.ag.enabled?=true \
+    bluetooth.profile.hid.host.enabled?=true \
+    bluetooth.profile.hid.device.enabled?=true \
+    bluetooth.profile.opp.enabled?=true \
+    bluetooth.profile.pan.nap.enabled?=true \
+    bluetooth.profile.pan.panu.enabled?=true \
+    bluetooth.profile.pbap.server.enabled?=true \
+    bluetooth.profile.map.server.enabled?=true \
+    bluetooth.profile.sap.server.enabled?=true \
+    bluetooth.profile.bap.broadcast.assist.enabled=false \
+    bluetooth.profile.bap.unicast.client.enabled=false \
+    bluetooth.profile.bas.client.enabled=false \
+    bluetooth.profile.ccp.server.enabled=false \
+    bluetooth.profile.csip.set_coordinator.enabled=false \
+    bluetooth.profile.hap.client.enabled=false \
+    bluetooth.profile.mcp.server.enabled=false \
+    bluetooth.profile.vcp.controller.enabled=false \
+    bluetooth.profile.asha.central.enabled=false
+
 # Fstab
 PRODUCT_PACKAGES += \
     fstab.a210 \
@@ -238,11 +273,7 @@ PRODUCT_COPY_FILES += \
 # Permissions - generic OS software features unrelated to any specific
 # hardware (verified_boot / secure_lock_screen match the AVB + nonsecure
 # gatekeeper already enabled above; the rest are hardware-independent
-# framework features). Deliberately no wifi/bluetooth/ethernet/usb.accessory
-# permission XMLs - none of that hardware is enabled or has a driver on this
-# board today. (usb.host.xml is copied in the USB HAL block above;
-# android.hardware.screen.xml moved to the Display block above, now that a
-# display composer is wired up.)
+# framework features).
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.ipsec_tunnels.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.ipsec_tunnels.xml \
     frameworks/native/data/etc/android.software.verified_boot.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.verified_boot.xml \

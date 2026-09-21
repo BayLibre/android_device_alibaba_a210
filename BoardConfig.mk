@@ -195,6 +195,10 @@ WPA_SUPPLICANT_VERSION := VER_0_8_X
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
 BOARD_HOSTAPD_DRIVER := NL80211
 
+# Bluetooth
+BOARD_HAVE_BLUETOOTH := true
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/alibaba/a210/bluetooth
+
 # SELinux
 BOARD_SEPOLICY_DIRS += hardware/generic/usb/aidl/sepolicy
 BOARD_SEPOLICY_DIRS += device/alibaba/a210/sepolicy/vendor
