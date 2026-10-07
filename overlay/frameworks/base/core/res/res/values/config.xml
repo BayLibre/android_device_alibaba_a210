@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Gesture navigation instead of the 3-button bar. Values come from
+         WindowManagerPolicyConstants: 0 = NAV_BAR_MODE_3BUTTON (AOSP default),
+         1 = NAV_BAR_MODE_2BUTTON, 2 = NAV_BAR_MODE_GESTURAL.
+         This is the first-boot default only: once the user picks a mode in
+         Settings, the navbar RRO it enables overrides this value, and that
+         choice lives in /data so it survives reboots but not a clean flash. -->
+    <integer name="config_navBarInteractionMode">2</integer>
+</resources>
