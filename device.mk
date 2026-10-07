@@ -93,9 +93,25 @@ PRODUCT_COPY_FILES += \
 PRODUCT_SOONG_NAMESPACES += \
     hardware/generic/audio
 
+# Thermal HAL (BayLibre generic, v3). No vendor.thermal.hardware: the kernel
+# exposes no thermal zones yet, so the generic config loads with none.
+PRODUCT_PACKAGES += \
+    com.android.hardware.thermal.rs.generic.v3
+
+PRODUCT_SOONG_NAMESPACES += \
+    hardware/generic/thermal
+
 # Power HAL
 PRODUCT_PACKAGES += \
     com.android.hardware.power
+
+# Memtrack
+PRODUCT_PACKAGES += \
+    android.hardware.memtrack-service.example
+
+# Dumpstate
+PRODUCT_PACKAGES += \
+    android.hardware.dumpstate-service.example
 
 # KeyMint (software, no TEE)
 PRODUCT_PACKAGES += \
