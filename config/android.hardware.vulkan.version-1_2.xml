@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2026 The Android Open Source Project
+
+     SPDX-License-Identifier: Apache-2.0
+-->
+
+<!-- frameworks/native ships no 1.2 variant. The device has a Vulkan driver
+     that supports API version 1.2 (0x00402000) -->
+<permissions>
+    <feature name="android.hardware.vulkan.version" version="4202496" />
+</permissions>
