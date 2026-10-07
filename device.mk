@@ -113,6 +113,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.dumpstate-service.example
 
+# WebView provider (riscv64), shared with the SpacemiT boards.
+PRODUCT_PACKAGES += \
+    webview_riscv64
+
 # KeyMint (software, no TEE)
 PRODUCT_PACKAGES += \
     com.android.hardware.keymint.rust_nonsecure
