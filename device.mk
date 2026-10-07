@@ -201,15 +201,17 @@ PRODUCT_VENDOR_PROPERTIES += \
     vendor.gralloc.minigbm.backend=gbm_mesa \
     vendor.mesa.gbm_backends_path=/vendor/lib64/gbm
 
+# Zink only offers OpenGL ES 2.0 on top of Mesa's PowerVR Vulkan
+# implementation, which lacks the VK_EXT_transform_feedback that ES 3.0
+# needs. Declaring more makes apps and CTS ask for contexts EGL cannot create.
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.opengles.version=196608 \
+    ro.opengles.version=131072 \
     persist.demo.rotationlock=1
 
 TARGET_VULKAN_SUPPORT := true
 TARGET_USES_VULKAN := true
 
 PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.opengles.aep.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.opengles.aep.xml \
     frameworks/native/data/etc/android.software.opengles.deqp.level-2022-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.opengles.deqp.level.xml \
     frameworks/native/data/etc/android.hardware.vulkan.compute-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.compute.xml \
     frameworks/native/data/etc/android.hardware.vulkan.level-1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.level.xml \
