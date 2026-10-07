@@ -150,7 +150,9 @@ PRODUCT_VENDOR_PROPERTIES += \
     ro.hardware.gralloc=minigbm
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sf.lcd_density=160 \
+    ro.sf.lcd_density=240 \
+    vendor.hwc.drm.internal_display_names=HDMI-A-1 \
+    ro.vendor.hwc.use_overlay_planes=true \
     ro.surface_flinger.protected_contents=false \
     config.disable_renderscript=true
 
