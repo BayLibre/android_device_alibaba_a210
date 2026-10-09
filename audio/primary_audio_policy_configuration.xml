@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- A210 Primary Audio HAL Module Configuration.
 
-     No real ALSA hardware behind this yet (a210-evb's dts wires no audio
-     codec) - this declares the same generic Speaker/Mic ports as AOSP's
-     own frameworks/av/services/audiopolicy/config/primary_audio_policy_configuration.xml
-     template. ModulePrimary only opens the configured ALSA card
-     (persist.vendor.audio.primary.card, default 0) lazily when a stream is
-     actually opened, so this registers IModule/default cleanly at boot
-     with no card present - playback/capture will just fail at open time
-     until a real codec is added. -->
+     Backed by the a210-evb audio-graph-card2 "A210-EVB-Audio" (ALSA id
+     A210EVBAudio), PCM device 0, on the A210 SODIMM V2 baseboard 3.5mm
+     headset jack: output = ES8156 DAC LOUT/ROUT -> jack, input = jack mic
+     -> ES7210 ADC.
+     The V2 baseboard has no speaker and no built-in mic.
+-->
 <module name="primary" halVersion="3.0">
     <attachedDevices>
-        <item>Speaker</item>
-        <item>Built-In Mic</item>
+        <item>Jack Out</item>
+        <item>Jack Mic</item>
     </attachedDevices>
-    <defaultOutputDevice>Speaker</defaultOutputDevice>
+    <defaultOutputDevice>Jack Out</defaultOutputDevice>
 
     <mixPorts>
         <mixPort name="primary output" role="source" flags="AUDIO_OUTPUT_FLAG_PRIMARY">
@@ -31,13 +29,15 @@
     </mixPorts>
 
     <devicePorts>
-        <devicePort tagName="Speaker" role="sink" type="AUDIO_DEVICE_OUT_SPEAKER" address="">
+        <devicePort tagName="Jack Out" role="sink"
+                    type="AUDIO_DEVICE_OUT_SPEAKER" address="">
             <profile name="" format="AUDIO_FORMAT_PCM_16_BIT"
                      samplingRates="48000"
                      channelMasks="AUDIO_CHANNEL_OUT_STEREO"/>
         </devicePort>
 
-        <devicePort tagName="Built-In Mic" type="AUDIO_DEVICE_IN_BUILTIN_MIC" role="source" address="bottom">
+        <devicePort tagName="Jack Mic" role="source"
+                    type="AUDIO_DEVICE_IN_BUILTIN_MIC" address="bottom">
             <profile name="" format="AUDIO_FORMAT_PCM_16_BIT"
                      samplingRates="48000"
                      channelMasks="AUDIO_CHANNEL_IN_STEREO"/>
@@ -45,9 +45,9 @@
     </devicePorts>
 
     <routes>
-        <route type="mix" sink="Speaker"
+        <route type="mix" sink="Jack Out"
                sources="primary output"/>
         <route type="mix" sink="primary input"
-               sources="Built-In Mic"/>
+               sources="Jack Mic"/>
     </routes>
 </module>
