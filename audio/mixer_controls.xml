@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Mixer controls configuration for the Zhihe A210 EVB
+     SODIMM V2 baseboard (audio-graph-card2 "A210-EVB-Audio": I2S1 <->
+     ES8156 DAC -> headphones, ES7210 ADC <- headset mic, 3.5mm jack).
+-->
+<mixerControls>
+    <control function="MASTER_VOLUME" type="int">
+        <name>ES8156 Master Playback Volume</name>
+    </control>
+
+    <control function="MIC_SWITCH" type="bool">
+        <name>ES7210 ADC_01 Capture Switch</name>
+    </control>
+
+    <control function="MIC_GAIN" type="int">
+        <name>ES7210 PGA_01 Capture Volume</name>
+    </control>
+</mixerControls>

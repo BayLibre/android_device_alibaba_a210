@@ -85,6 +85,15 @@ BOARD_VENDOR_KERNEL_MODULES_LOAD += \
     $(KERNEL_MODULES_PATH)/vendor_dlkm/display-connector.ko \
     $(KERNEL_MODULES_PATH)/vendor_dlkm/th1520-dw-hdmi.ko \
     $(KERNEL_MODULES_PATH)/vendor_dlkm/verisilicon-dc.ko
+# Audio modules
+BOARD_VENDOR_KERNEL_MODULES_LOAD += \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/dw-axi-dmac-platform.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/snd-soc-simple-card-utils.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/snd-soc-zhihe-pcm.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/snd-soc-zhihe-i2s.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/snd-soc-es8156.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/snd-soc-es7210.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/snd-soc-audio-graph-card2.ko
 
 BOARD_SYSTEM_KERNEL_MODULES := $(wildcard $(KERNEL_MODULES_PATH)/system_dlkm/*.ko)
 BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(BOARD_SYSTEM_KERNEL_MODULES)
