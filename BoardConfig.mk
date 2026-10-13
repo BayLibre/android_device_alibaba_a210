@@ -93,6 +93,8 @@ BOARD_VENDOR_KERNEL_MODULES_LOAD += \
     $(KERNEL_MODULES_PATH)/vendor_dlkm/snd-soc-zhihe-i2s.ko \
     $(KERNEL_MODULES_PATH)/vendor_dlkm/snd-soc-es8156.ko \
     $(KERNEL_MODULES_PATH)/vendor_dlkm/snd-soc-es7210.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/snd-soc-hdmi-codec.ko \
+    $(KERNEL_MODULES_PATH)/vendor_dlkm/dw-hdmi-i2s-audio.ko \
     $(KERNEL_MODULES_PATH)/vendor_dlkm/snd-soc-audio-graph-card2.ko
 
 BOARD_SYSTEM_KERNEL_MODULES := $(wildcard $(KERNEL_MODULES_PATH)/system_dlkm/*.ko)
