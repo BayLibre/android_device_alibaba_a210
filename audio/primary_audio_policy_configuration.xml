@@ -2,17 +2,19 @@
 <!-- A210 Primary Audio HAL Module Configuration.
 
      Backed by the a210-evb audio-graph-card2 "A210-EVB-Audio" (ALSA id
-     A210EVBAudio), PCM device 0, on the A210 SODIMM V2 baseboard 3.5mm
-     headset jack: output = ES8156 DAC LOUT/ROUT -> jack, input = jack mic
-     -> ES7210 ADC.
+     A210EVBAudio), which has two PCM devices:
+       0: 3.5mm headset jack of the A210 SODIMM V2 baseboard,
+          output = ES8156 DAC LOUT/ROUT -> jack,
+          input = jack mic -> ES7210 ADC.
+       1: HDMI (I2S3 -> dw-hdmi I2S audio input), playback only.
      The V2 baseboard has no speaker and no built-in mic.
 -->
 <module name="primary" halVersion="3.0">
     <attachedDevices>
-        <item>Jack Out</item>
+        <item>HDMI Out</item>
         <item>Jack Mic</item>
     </attachedDevices>
-    <defaultOutputDevice>Jack Out</defaultOutputDevice>
+    <defaultOutputDevice>HDMI Out</defaultOutputDevice>
 
     <mixPorts>
         <mixPort name="primary output" role="source" flags="AUDIO_OUTPUT_FLAG_PRIMARY">
@@ -29,7 +31,7 @@
     </mixPorts>
 
     <devicePorts>
-        <devicePort tagName="Jack Out" role="sink"
+        <devicePort tagName="HDMI Out" role="sink"
                     type="AUDIO_DEVICE_OUT_SPEAKER" address="">
             <profile name="" format="AUDIO_FORMAT_PCM_16_BIT"
                      samplingRates="48000"
@@ -45,7 +47,7 @@
     </devicePorts>
 
     <routes>
-        <route type="mix" sink="Jack Out"
+        <route type="mix" sink="HDMI Out"
                sources="primary output"/>
         <route type="mix" sink="primary input"
                sources="Jack Mic"/>
