@@ -77,9 +77,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
     com.android.hardware.audio.generic
 
+# ALSA PCM device of the primary output: 0 = headset jack, 1 = HDMI.
 PRODUCT_VENDOR_PROPERTIES += \
     ro.vendor.audio.primary.card_name=A210EVBAudio \
-    ro.vendor.audio.primary.device=0
+    ro.vendor.audio.primary.device=1
 
 PRODUCT_COPY_FILES += \
     frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
